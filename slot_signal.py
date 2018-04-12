@@ -6,7 +6,7 @@ import globalVar
 import sqlite3
 import database
 from Student import Students
-from boxUI import StudentBox
+from boxUI import StudentBox, QueryStudent
 from dialog import Ui_Dialog
 
 class set_slot_signal(Ui_MainWindow):
@@ -17,12 +17,16 @@ class set_slot_signal(Ui_MainWindow):
         self.openDataBaseAction.triggered.connect(self.openDBFunction)
         self.fileCloseAction.triggered.connect(self.close)
         self.createButton.clicked.connect(self.createNewFunction)
-        self.modifyButton.clicked.connect(self.newDialog)
+        self.queryButton.clicked.connect(self.queryFunction)
 
     def createNewFunction(self):
-        
+        self.newDialog()
+        if(globalVar.status == 0):
+            # id conflict
+            return
+
         self.stuInfoList.setRowCount(globalVar.stuNum+1)
-        student = Students('10','2','3','4','5')
+        student = globalVar.newStu
         database.add_new_item(student)
         
         self.stuInfoList.setItem(globalVar.stuNum,0,QTableWidgetItem(student.id))
@@ -58,8 +62,31 @@ class set_slot_signal(Ui_MainWindow):
         globalVar.newStu = Students()
         dialog = StudentBox()
         dialog.exec_()
-        print(globalVar.status)
 
+    def queryFunction(self):
+        globalVar.condition = Students()
+        dialog = QueryStudent()
+        dialog.exec_()
+        
+        result = database.query(globalVar.condition)
+        if len(result) is 0:
+            globalVar.condition = Students()
+            self.warning()
+            return
+
+        globalVar.stuNum = len(result)
+        self.stuInfoList.clearContents()
+        self.stuInfoList.setRowCount(globalVar.stuNum)
+
+        for i in range(globalVar.stuNum):
+            self.stuInfoList.setItem(i, 0, QTableWidgetItem(result[i][0]))
+            self.stuInfoList.setItem(i, 1, QTableWidgetItem(result[i][1]))
+            self.stuInfoList.setItem(i, 2, QTableWidgetItem(result[i][2]))
+            self.stuInfoList.setItem(i, 3, QTableWidgetItem(result[i][3]))
+            self.stuInfoList.setItem(i, 4, QTableWidgetItem(result[i][4]))
+
+    def warning(self):
+        subdialog = QtWidgets.QMessageBox.warning(self, "查询无效", "无符合条件结果", QtWidgets.QMessageBox.Yes)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
