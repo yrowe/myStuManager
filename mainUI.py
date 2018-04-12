@@ -24,6 +24,8 @@ class Ui_MainWindow(QWidget):
         self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业"])
         #选中条目的动作为选中那一行
         self.stuInfoList.setSelectionBehavior(Qt.QAbstractItemView.SelectRows)
+        #单行选中
+        self.stuInfoList.setSelectionMode(Qt.QAbstractItemView.SingleSelection)
         #将每个条目扩展到充满容器
         self.stuInfoList.horizontalHeader().setStretchLastSection(True)
         #将容器宽度平均分给所有条目
@@ -32,6 +34,9 @@ class Ui_MainWindow(QWidget):
         self.createButton = Qt.QPushButton(self)
         self.createButton.setText("新建")
         self.createButton.setDefault(True)
+
+        self.deleteButton = Qt.QPushButton(self)
+        self.deleteButton.setText("删除")
 
         self.modifyButton = Qt.QPushButton(self)
         self.modifyButton.setText("修改")
@@ -77,8 +82,9 @@ class Ui_MainWindow(QWidget):
         layout = Qt.QGridLayout(self)
         layout.addWidget(self.stuInfoList,3,0,5,-1)
         layout.addWidget(self.queryButton,8,9,1,1)
-        layout.addWidget(self.createButton,8,7,1,1)
+        layout.addWidget(self.createButton,8,6,1,1)
         layout.addWidget(self.modifyButton,8,8,1,1)
+        layout.addWidget(self.deleteButton,8,7,1,1)
         layout.setMenuBar(self.menuBar)
 
 

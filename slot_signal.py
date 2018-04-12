@@ -8,6 +8,7 @@ import database
 from Student import Students
 from boxUI import StudentBox, QueryStudent
 from dialog import Ui_Dialog
+import ipdb
 
 class set_slot_signal(Ui_MainWindow):
     def __init__(self):
@@ -18,6 +19,21 @@ class set_slot_signal(Ui_MainWindow):
         self.fileCloseAction.triggered.connect(self.close)
         self.createButton.clicked.connect(self.createNewFunction)
         self.queryButton.clicked.connect(self.queryFunction)
+        #get table item
+        self.stuInfoList.itemClicked.connect(self.getItem)
+        self.modifyButton.connect(self.modifyFunction)
+
+    def modifyFunction(self):
+    	select_row = self.stuInfoList.currentRow()
+    	
+
+
+    def getItem(self, item):
+        #ipdb.set_trace()
+        #print('you selected =>'+item.text())
+
+        #print(self.stuInfoList.currentRow())
+        pass
 
     def createNewFunction(self):
         self.newDialog()

@@ -12,6 +12,8 @@ class StudentBox(object):
         self.dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         self.dialog.setWindowFlags(QtCore.Qt.WindowCloseButtonHint)
         self.id = window.lineEdit_id
+        self.id.setText('123')
+        self.id.setEnabled(False)
         self.name = window.lineEdit_name
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
