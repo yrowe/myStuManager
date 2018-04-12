@@ -7,9 +7,9 @@ Created on Wed Apr 11 11:34:45 2018
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTableWidget, QHBoxLayout, QTableWidgetItem
-from mainWin import *
+from dialog import *
 
-class MyMainWindow(QMainWindow, Ui_MainWindow):
+class MyMainWindow(QMainWindow, Ui_Dialog):
     def __init__(self, parent=None):
         super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)

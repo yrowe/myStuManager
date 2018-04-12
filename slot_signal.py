@@ -1,10 +1,13 @@
 from mainUI import Ui_MainWindow
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTableWidget, QHBoxLayout, QTableWidgetItem
+from PyQt5 import QtWidgets, QtCore, QtGui
 import globalVar
 import sqlite3
 import database
 from Student import Students
+from boxUI import StudentBox
+from dialog import Ui_Dialog
 
 class set_slot_signal(Ui_MainWindow):
     def __init__(self):
@@ -14,6 +17,7 @@ class set_slot_signal(Ui_MainWindow):
         self.openDataBaseAction.triggered.connect(self.openDBFunction)
         self.fileCloseAction.triggered.connect(self.close)
         self.createButton.clicked.connect(self.createNewFunction)
+        self.modifyButton.clicked.connect(self.newDialog)
 
     def createNewFunction(self):
         
@@ -41,6 +45,19 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 2, QTableWidgetItem(allStu[i][2]))
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
+
+    def newDialog(self):
+        '''
+        dialog = QtWidgets.QDialog()
+        btn = QtWidgets.QPushButton("ok", dialog)
+        btn.move(50, 50)
+        dialog.setWindowTitle("Dialog")
+        dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        dialog.exec_()
+        '''
+        dialog = StudentBox()
+        dialog.exec_()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
