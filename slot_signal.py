@@ -55,8 +55,10 @@ class set_slot_signal(Ui_MainWindow):
         dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         dialog.exec_()
         '''
+        globalVar.newStu = Students()
         dialog = StudentBox()
         dialog.exec_()
+        print(globalVar.status)
 
 
 if __name__ == '__main__':
