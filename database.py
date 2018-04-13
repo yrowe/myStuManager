@@ -10,16 +10,25 @@ def get_all_item(path='stu.db'):
     return allStu
 
 def add_new_item(student, path='stu.db'):
-    #TODO exception same id(primary key)
+    #TODO exception same id(primary key),   done!
     if not check_unique_id(student):
     	return False
     conn = sqlite3.connect(path)
     c = conn.cursor()
     c.execute("insert into STU (id, name, gender, grade, major)\
-     values({}, {}, {}, {}, {})".format(student.id, student.name, student.gender, student.grade, student.major)) 
+     values('{}', '{}', '{}', '{}', '{}')".format(student.id, student.name, student.gender, student.grade, student.major)) 
     conn.commit()
     conn.close()
     return True
+
+def modify_item_by_id(student, path='stu.db'):
+    conn = sqlite3.connect(path)
+    c = conn.cursor()
+
+    c.execute("update STU set name = '{}', gender = '{}', grade = '{}', \
+    	major = '{}' where id = '{}'".format(student.name, student.gender, student.grade, student.major, student.id))
+    conn.commit()
+    conn.close()
 
 
 def check_unique_id(student, path='stu.db'):
@@ -32,6 +41,13 @@ def check_unique_id(student, path='stu.db'):
 	else:
 		conn.close()
 		return False
+
+def delete(id, path='stu.db'):
+    conn = sqlite3.connect(path)
+    c = conn.cursor()
+    c.execute("delete from STU where id = {}".format(id))
+    conn.commit()
+    conn.close()
 
 def query(col, path='stu.db'):
 	cnt = 0
