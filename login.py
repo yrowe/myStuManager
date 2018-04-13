@@ -28,6 +28,7 @@ class logWin(Ui_Dialog):
 
     def verifyFunction(self):
         #TODO transform this func to database version
+        globalVar.okPush = 1
         if self.userLine.text() == 'wuziqiang' and self.passwd.text() == '123':
             globalVar.verify = 1
         elif self.userLine.text() == 'admin' and self.passwd.text() == '123':
@@ -40,14 +41,18 @@ class logWin(Ui_Dialog):
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    winLog = logWin()
-    winLog.show()
-
-    winLog.exec_()
-    
-    if(globalVar.verify is 0):
-        sys.exit(0)
+    while(globalVar.verify is 0):
+        try:
+            del app
+        except:
+            pass
+        globalVar.okPush = 0
+        app = QApplication(sys.argv)
+        winLog = logWin()
+        winLog.show()
+        winLog.exec_()
+        if(globalVar.okPush is 0):
+            sys.exit(0)
     
     app2 = QApplication(sys.argv)
     win = set_slot_signal()

@@ -1,6 +1,8 @@
 import sqlite3
+import globalVar
 
 def get_all_item(path='stu.db'):
+    path = globalVar.dbPath
     conn = sqlite3.connect(path)
     c = conn.cursor()
     c.execute("select * from STU")
@@ -11,6 +13,7 @@ def get_all_item(path='stu.db'):
 
 def add_new_item(student, path='stu.db'):
     #TODO exception same id(primary key),   done!
+    path = globalVar.dbPath
     if not check_unique_id(student):
     	return False
     conn = sqlite3.connect(path)
@@ -22,6 +25,7 @@ def add_new_item(student, path='stu.db'):
     return True
 
 def modify_item_by_id(student, path='stu.db'):
+    path = globalVar.dbPath
     conn = sqlite3.connect(path)
     c = conn.cursor()
 
@@ -32,6 +36,7 @@ def modify_item_by_id(student, path='stu.db'):
 
 
 def check_unique_id(student, path='stu.db'):
+	path = globalVar.dbPath
 	conn = sqlite3.connect(path)
 	c = conn.cursor()
 	c.execute("select * from STU where id = {}".format(student.id))

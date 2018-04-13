@@ -8,7 +8,7 @@ import database
 from Student import Students
 from boxUI import StudentBox, QueryStudent, EditClass
 from dialog import Ui_Dialog
-import ipdb
+import about
 
 class set_slot_signal(Ui_MainWindow):
     def __init__(self):
@@ -17,12 +17,13 @@ class set_slot_signal(Ui_MainWindow):
         self.createNewAction.triggered.connect(self.createNewFunction)
         self.openDataBaseAction.triggered.connect(self.openDBFunction)
         self.fileCloseAction.triggered.connect(self.close)
+        self.openAbout.triggered.connect(self.openAboutFunction)
         self.createButton.clicked.connect(self.createNewFunction)
         self.queryButton.clicked.connect(self.queryFunction)
         self.modifyButton.clicked.connect(self.modifyFunction)
         self.deleteButton.clicked.connect(self.deleteFunction)
         #get table item
-        self.stuInfoList.itemClicked.connect(self.getItem)
+        #self.stuInfoList.itemClicked.connect(self.getItem)
         
         if globalVar.verify is 1:
             self.deleteButton.setEnabled(False)
@@ -61,15 +62,9 @@ class set_slot_signal(Ui_MainWindow):
 
         database.modify_item_by_id(globalVar.editStu)
 
-    def getItem(self, item):
-        #ipdb.set_trace()
-        #print('you selected =>'+item.text())
-
-        #print(self.stuInfoList.currentRow())
-        pass
 
     def createNewFunction(self):
-    	#TODO more rule to define input! the number of input id, non-blank text
+        #TODO more rule to define input! the number of input id, non-blank text
         self.newDialog()
         if(globalVar.status == 0):
             # id conflict
@@ -86,11 +81,15 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setItem(globalVar.stuNum,4,QTableWidgetItem(student.major))
         
         globalVar.stuNum = globalVar.stuNum + 1
-
+    
+    def getfiles(self):
+        fname, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open database', 
+        	'.', "database file(*.db)")
+        globalVar.dbPath = fname
 
     def openDBFunction(self):
+        self.getfiles()
         allStu = database.get_all_item()
-        
         globalVar.stuNum = len(allStu)
         self.stuInfoList.setRowCount(globalVar.stuNum)
         for i in range(globalVar.stuNum):
@@ -170,6 +169,15 @@ class set_slot_signal(Ui_MainWindow):
         if typeError is 3:
             subdialog = QtWidgets.QMessageBox.warning(self, "查询无效", "至少指定一个条件", QtWidgets.QMessageBox.Yes)
             return
+
+    def openAboutFunction(self):
+        dialog = QtWidgets.QDialog()
+        window = about.Ui_Dialog()
+        window.setupUi(dialog)
+        dialog.setWindowTitle("关于")
+        dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        dialog.setWindowFlags(QtCore.Qt.WindowCloseButtonHint)
+        dialog.exec_()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

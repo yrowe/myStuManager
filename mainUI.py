@@ -54,6 +54,10 @@ class Ui_MainWindow(QWidget):
         self.menuBar.addMenu(menu)
         self.menuBar.addMenu(menu_A)
 
+        self.openAbout = Qt.QAction(menu_A)
+        self.openAbout.setText("作品相关")
+        menu_A.addAction(self.openAbout)
+
         self.openDataBaseAction = Qt.QAction(menu)
         self.openDataBaseAction.setText("打开数据库")
         menu.addAction(self.openDataBaseAction)
