@@ -7,6 +7,7 @@ import database
 
 #TODO 整个boxUI.py改成基于一个基类的各种dialog
 class StudentBox(object):
+	#新建档案弹出来的对话框
     def __init__(self):
         self.dialog = QtWidgets.QDialog()
         window = Ui_Dialog()
@@ -49,6 +50,7 @@ class StudentBox(object):
 
 
 class QueryStudent(object):
+	#查询按钮弹出来的对话框
     def __init__(self):
         self.dialog = QtWidgets.QDialog()
         window = Ui_Dialog()
@@ -79,6 +81,7 @@ class QueryStudent(object):
         
 
 class EditClass(object):
+	#修改按钮弹出来的对话框
     def __init__(self, stu):
         self.dialog = QtWidgets.QDialog()
         window = Ui_Dialog()

@@ -11,86 +11,114 @@ from dialog import Ui_Dialog
 import about
 
 class set_slot_signal(Ui_MainWindow):
+	#信号与槽，对应登陆后的界面
     def __init__(self):
         super().__init__()
-
+        #菜单，创建档案选项
         self.createNewAction.triggered.connect(self.createNewFunction)
+        #菜单，打开数据库选项
         self.openDataBaseAction.triggered.connect(self.openDBFunction)
+        #菜单，关闭选项
         self.fileCloseAction.triggered.connect(self.close)
+        #菜单，关于选项
         self.openAbout.triggered.connect(self.openAboutFunction)
+        #按钮，创建档案
         self.createButton.clicked.connect(self.createNewFunction)
+        #按钮，查询按钮
         self.queryButton.clicked.connect(self.queryFunction)
+        #按钮，修改按钮
         self.modifyButton.clicked.connect(self.modifyFunction)
+        #按钮，删除按钮
         self.deleteButton.clicked.connect(self.deleteFunction)
         #get table item
         #self.stuInfoList.itemClicked.connect(self.getItem)
         
+        #如果登录时候，得到的权限只是学生，则使增删改功能失效
         if globalVar.verify is 1:
             self.deleteButton.setEnabled(False)
             self.modifyButton.setEnabled(False)
             self.createButton.setEnabled(False)
             self.queryButton.setDefault(True)
             self.createNewAction.setEnabled(False)
-        
 
     def modifyFunction(self):
-    	#TODO if there is no selected row , what will happen
+        #TODO if there is no selected row , what will happen
+        #修改按钮对应的函数
+        #得到选中的行
         select_row = self.stuInfoList.currentRow()
+        #如果，没有选中行，此时值为-1， 显示警告
         if(select_row is -1):
-        	self.warning(1)
-        	return
+            self.warning(1)
+            return
+        #新建一个学生实例，方便传数据
         collectStu = Students()
+        #把修改前的值记录下来，方便在窗口显示
         collectStu.id = self.stuInfoList.item(select_row, 0).text()
         collectStu.name = self.stuInfoList.item(select_row, 1).text()
         collectStu.gender = self.stuInfoList.item(select_row, 2).text()
         collectStu.grade = self.stuInfoList.item(select_row, 3).text()
         collectStu.major = self.stuInfoList.item(select_row, 4).text()
-        
+        #设置是否修改的标志位
         globalVar.hasEdited = 0
-
+        #打开修改窗口对话框
         dialog = EditClass(collectStu)
         dialog.exec_()
         
+        #如果没有修改，则直接返回
         if globalVar.hasEdited is 0:
             return
-
+        
+        #有对信息修改的话，修改UI界面对应的显示
         self.stuInfoList.setItem(select_row, 0,QTableWidgetItem(globalVar.editStu.id))
         self.stuInfoList.setItem(select_row, 1,QTableWidgetItem(globalVar.editStu.name))
         self.stuInfoList.setItem(select_row, 2,QTableWidgetItem(globalVar.editStu.gender))
         self.stuInfoList.setItem(select_row, 3,QTableWidgetItem(globalVar.editStu.grade))
         self.stuInfoList.setItem(select_row, 4,QTableWidgetItem(globalVar.editStu.major))
-
+        
+        #修改数据库对应的项
         database.modify_item_by_id(globalVar.editStu)
 
 
     def createNewFunction(self):
         #TODO more rule to define input! the number of input id, non-blank text
+        #新建对话框
         self.newDialog()
         if(globalVar.status == 0):
             # id conflict
+            #如果，新建的学生学号重复，则已经显示过警告了，此处就直接退出了
             return
-
-        self.stuInfoList.setRowCount(globalVar.stuNum+1)
-        student = globalVar.newStu
-        database.add_new_item(student)
         
+        #为UI界面新增项准备工作，把当前表项数+1
+        self.stuInfoList.setRowCount(globalVar.stuNum+1)
+        #得到需要增加的学生档案的值
+        student = globalVar.newStu
+        #同步增加到数据库上
+        database.add_new_item(student)
+        #在UI界面新增项
         self.stuInfoList.setItem(globalVar.stuNum,0,QTableWidgetItem(student.id))
         self.stuInfoList.setItem(globalVar.stuNum,1,QTableWidgetItem(student.name))
         self.stuInfoList.setItem(globalVar.stuNum,2,QTableWidgetItem(student.gender))
         self.stuInfoList.setItem(globalVar.stuNum,3,QTableWidgetItem(student.grade))
         self.stuInfoList.setItem(globalVar.stuNum,4,QTableWidgetItem(student.major))
-        
+        #同步全局变量，+1，新增一个学生
         globalVar.stuNum = globalVar.stuNum + 1
     
     def getfiles(self):
+        #打开数据库操作，在下面的openDBFunction用到
         fname, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Open database', 
         	'.', "database file(*.db)")
+        #得到数据库地址，同步到全局变量
         globalVar.dbPath = fname
 
     def openDBFunction(self):
+        #对应，打开数据选项函数
+        #打开数据库
         self.getfiles()
+        #得到数据库中所有项
         allStu = database.get_all_item()
+        #获得需要显示的项目个数，同步全局变量
         globalVar.stuNum = len(allStu)
+        #更新UI界面显示
         self.stuInfoList.setRowCount(globalVar.stuNum)
         for i in range(globalVar.stuNum):
             self.stuInfoList.setItem(i, 0, QTableWidgetItem(allStu[i][0]))
@@ -100,52 +128,59 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
 
     def newDialog(self):
-        '''
-        dialog = QtWidgets.QDialog()
-        btn = QtWidgets.QPushButton("ok", dialog)
-        btn.move(50, 50)
-        dialog.setWindowTitle("Dialog")
-        dialog.setWindowModality(QtCore.Qt.ApplicationModal)
-        dialog.exec_()
-        '''
+        #对接创建新档案用到的，新窗口
         globalVar.newStu = Students()
         dialog = StudentBox()
         dialog.exec_()
 
     def deleteFunction(self):
+        #删除按钮对应的函数
+        #获取目前选中的行号
         select_row = self.stuInfoList.currentRow()
+        #如果，没有选中行，则显示警告，并直接退出
         if select_row is -1:
             self.warning(2)
             return
+        #获取选中行的ID
         select_id = self.stuInfoList.item(select_row, 0).text()
+        #删除选中行
         self.stuInfoList.removeRow(select_row)
+        #同步更新到数据库
         database.delete(select_id)
 
 
     def queryFunction(self):
+        #查询操作对应的函数
+        #用全局变量记录查询条件
         globalVar.condition = Students()
+        #是否进行了查询标志位
         globalVar.hasQuery = 0
-
+        
+        #点击查询按钮弹出的页面
         dialog = QueryStudent()
         dialog.exec_()
-
+        
+        #点了查询，但是输入全部为空
         if globalVar.condition.id is '' and globalVar.condition.name is '' \
         and globalVar.condition.gender is '' and globalVar.condition.grade is ''\
         and globalVar.condition.major is '' and globalVar.hasQuery is 1:
             self.warning(3)
             return
-        
+        #点了查询，但是无合适结果
         result = database.query(globalVar.condition)
         if len(result) is 0 and globalVar.hasQuery is 1:
             globalVar.condition = Students()
             self.warning(0)
             return
-
+        #点了查询按钮，但是没查，直接退出的情况
         if len(result) is 0:
-        	return
-
+            return
+        
+        #获得符合条件的结果个数
         globalVar.stuNum = len(result)
+        #清空UI界面，好进行显示
         self.stuInfoList.clearContents()
+        #显示查询结果，在UI界面上
         self.stuInfoList.setRowCount(globalVar.stuNum)
 
         for i in range(globalVar.stuNum):
@@ -156,6 +191,7 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(result[i][4]))
 
     def warning(self, typeError):
+    	#不同的警告
         if typeError is 0:
             subdialog = QtWidgets.QMessageBox.warning(self, "查询无效", "无符合条件结果", QtWidgets.QMessageBox.Yes)
             return
@@ -171,6 +207,7 @@ class set_slot_signal(Ui_MainWindow):
             return
 
     def openAboutFunction(self):
+    	#菜单，关于选项
         dialog = QtWidgets.QDialog()
         window = about.Ui_Dialog()
         window.setupUi(dialog)
@@ -180,6 +217,7 @@ class set_slot_signal(Ui_MainWindow):
         dialog.exec_()
 
 if __name__ == '__main__':
+	#这样 python slot_signal.py就可以直接运行，方便调试，把这段删了，就必须先登录
     app = QApplication(sys.argv)
     win = set_slot_signal()
     win.show()

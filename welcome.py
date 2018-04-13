@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
+    #登录界面，UI描述，不赘述
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(437, 405)

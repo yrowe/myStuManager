@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
+	#自动生成的UI，为后续boxUI各种对话框使用
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(346, 364)

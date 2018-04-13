@@ -4,6 +4,7 @@ import sys
 
 
 class Ui_MainWindow(QWidget):
+    #登录后的界面，UI设置，不赘述
     def __init__(self):
     	super().__init__()
     	self.initUI()

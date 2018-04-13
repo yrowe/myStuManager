@@ -6,10 +6,11 @@ from slot_signal import set_slot_signal
 import globalVar
 
 class logWin(Ui_Dialog):
-	#TODO ! rewrite this UI, because buttonBox accepted func is not what i expected!
+	#登录界面UI
     def __init__(self):
         super().__init__()
         self.dialog = QtWidgets.QDialog()
+        #这个Ui_Dialog和boxUI.py的Ui_Dialog不一样，是在welcome.py里定义的，不一样
         window = Ui_Dialog()
         window.setupUi(self.dialog)
         self.dialog.setWindowTitle("登录")
@@ -28,6 +29,7 @@ class logWin(Ui_Dialog):
 
     def verifyFunction(self):
         #TODO transform this func to database version
+        #登录暂时没有接数据库，简单的判断。。
         globalVar.okPush = 1
         if self.userLine.text() == 'wuziqiang' and self.passwd.text() == '123':
             globalVar.verify = 1
@@ -41,6 +43,7 @@ class logWin(Ui_Dialog):
 
 
 if __name__ == '__main__':
+	#循环登录，直到输对密码或者退出
     while(globalVar.verify is 0):
         try:
             del app

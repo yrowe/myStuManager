@@ -2,6 +2,7 @@ import sqlite3
 import globalVar
 
 def get_all_item(path='stu.db'):
+	#获取数据库所有数据
     path = globalVar.dbPath
     conn = sqlite3.connect(path)
     c = conn.cursor()
@@ -13,6 +14,7 @@ def get_all_item(path='stu.db'):
 
 def add_new_item(student, path='stu.db'):
     #TODO exception same id(primary key),   done!
+    #新添数据项
     path = globalVar.dbPath
     if not check_unique_id(student):
     	return False
@@ -25,6 +27,7 @@ def add_new_item(student, path='stu.db'):
     return True
 
 def modify_item_by_id(student, path='stu.db'):
+	#根据id, 修改数据库对应的项
     path = globalVar.dbPath
     conn = sqlite3.connect(path)
     c = conn.cursor()
@@ -36,6 +39,7 @@ def modify_item_by_id(student, path='stu.db'):
 
 
 def check_unique_id(student, path='stu.db'):
+	#检查新建项时，id不得重复
 	path = globalVar.dbPath
 	conn = sqlite3.connect(path)
 	c = conn.cursor()
@@ -48,6 +52,7 @@ def check_unique_id(student, path='stu.db'):
 		return False
 
 def delete(id, path='stu.db'):
+	#删除数据项，依据id
     conn = sqlite3.connect(path)
     c = conn.cursor()
     c.execute("delete from STU where id = {}".format(id))
@@ -55,40 +60,41 @@ def delete(id, path='stu.db'):
     conn.close()
 
 def query(col, path='stu.db'):
+	#查询对应条件数据项，由于写的很差，所以要求不得全为空
 	cnt = 0
 	order = ''
 	if col.id is not '':
-		order += 'id = {}'.format(col.id)
+		order += "id = '{}'".format(col.id)
 		cnt = cnt + 1
 	
 	if col.name is not '' and cnt is 0:
-		order += 'name = {}'.format(col.name)
+		order += "name = '{}'".format(col.name)
 		cnt = cnt + 1
 	elif col.name is not '':
-		order += ' and name = {}'.format(col.name)
+		order += " and name = '{}'".format(col.name)
 	
 	if col.gender is not '' and cnt is 0:
-		order += 'gender = {}'.format(col.gender)
+		order += "gender = '{}'".format(col.gender)
 		cnt = cnt + 1
 	elif col.gender is not '':
-		order += ' and gender = {}'.format(col.gender)
+		order += " and gender = '{}'".format(col.gender)
 
 	if col.grade is not '' and cnt is 0:
-		order += 'grade = {}'.format(col.grade)
+		order += "grade = '{}'".format(col.grade)
 		cnt = cnt + 1
 	elif col.grade is not '':
-		order += ' and grade = {}'.format(col.grade)
+		order += " and grade = '{}'".format(col.grade)
 
 	if col.major is not '' and cnt is 0:
-		order += 'major = {}'.format(col.major)
+		order += "major = '{}'".format(col.major)
 		cnt = cnt + 1
 	elif col.major is not '':
-		order += ' and major = {}'.format(col.major)
+		order += " and major = '{}'".format(col.major)
 
 	print(order)
 	if order == '':
 		return ()
-
+    
 	conn = sqlite3.connect(path)
 	c = conn.cursor()
 	c.execute("select * from STU where "+order)
