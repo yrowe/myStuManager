@@ -30,6 +30,8 @@ class logWin(Ui_Dialog):
         #TODO transform this func to database version
         if self.userLine.text() == 'wuziqiang' and self.passwd.text() == '123':
             globalVar.verify = 1
+        elif self.userLine.text() == 'admin' and self.passwd.text() == '123':
+        	globalVar.verify = 2
         else:
             self.warning()
 

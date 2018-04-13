@@ -24,6 +24,13 @@ class set_slot_signal(Ui_MainWindow):
         #get table item
         self.stuInfoList.itemClicked.connect(self.getItem)
         
+        if globalVar.verify is 1:
+            self.deleteButton.setEnabled(False)
+            self.modifyButton.setEnabled(False)
+            self.createButton.setEnabled(False)
+            self.queryButton.setDefault(True)
+            self.createNewAction.setEnabled(False)
+        
 
     def modifyFunction(self):
     	#TODO if there is no selected row , what will happen
