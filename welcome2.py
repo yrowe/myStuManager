@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'welcome.ui'
+# Form implementation generated from reading ui file 'welcome2.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -44,7 +44,7 @@ class Ui_Dialog(object):
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.horizontalLayout_2.addWidget(self.lineEdit_2)
         self.widget = QtWidgets.QWidget(Dialog)
-        self.widget.setGeometry(QtCore.QRect(90, 350, 233, 25))
+        self.widget.setGeometry(QtCore.QRect(100, 350, 233, 25))
         self.widget.setObjectName("widget")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.widget)
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -54,20 +54,20 @@ class Ui_Dialog(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.horizontalLayout_3.addWidget(self.comboBox)
-        self.buttonBox = QtWidgets.QDialogButtonBox(self.widget)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
-        self.horizontalLayout_3.addWidget(self.buttonBox)
+        self.pushButton = QtWidgets.QPushButton(self.widget)
+        self.pushButton.setObjectName("pushButton")
+        self.horizontalLayout_3.addWidget(self.pushButton)
+        self.pushButton_2 = QtWidgets.QPushButton(self.widget)
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout_3.addWidget(self.pushButton_2)
         self.layoutWidget.raise_()
         self.layoutWidget.raise_()
-        self.buttonBox.raise_()
         self.label.raise_()
+        self.pushButton.raise_()
         self.comboBox.raise_()
+        self.pushButton_2.raise_()
 
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -77,4 +77,6 @@ class Ui_Dialog(object):
         self.label_3.setText(_translate("Dialog", "密码"))
         self.comboBox.setItemText(0, _translate("Dialog", "管理员"))
         self.comboBox.setItemText(1, _translate("Dialog", "学生"))
+        self.pushButton.setText(_translate("Dialog", "登录"))
+        self.pushButton_2.setText(_translate("Dialog", "退出"))
 

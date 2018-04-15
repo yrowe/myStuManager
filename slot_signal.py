@@ -30,6 +30,7 @@ class set_slot_signal(Ui_MainWindow):
         self.modifyButton.clicked.connect(self.modifyFunction)
         #按钮，删除按钮
         self.deleteButton.clicked.connect(self.deleteFunction)
+        self.flushButton.clicked.connect(self.flushFunction)
         #get table item
         #self.stuInfoList.itemClicked.connect(self.getItem)
         
@@ -215,6 +216,20 @@ class set_slot_signal(Ui_MainWindow):
         dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         dialog.setWindowFlags(QtCore.Qt.WindowCloseButtonHint)
         dialog.exec_()
+
+    def flushFunction(self):
+        allStu = database.get_all_item()
+        #获得需要显示的项目个数，同步全局变量
+        globalVar.stuNum = len(allStu)
+        #更新UI界面显示
+        self.stuInfoList.setRowCount(globalVar.stuNum)
+        for i in range(globalVar.stuNum):
+            self.stuInfoList.setItem(i, 0, QTableWidgetItem(allStu[i][0]))
+            self.stuInfoList.setItem(i, 1, QTableWidgetItem(allStu[i][1]))
+            self.stuInfoList.setItem(i, 2, QTableWidgetItem(allStu[i][2]))
+            self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[i][3]))
+            self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
+
 
 if __name__ == '__main__':
 	#这样 python slot_signal.py就可以直接运行，方便调试，把这段删了，就必须先登录

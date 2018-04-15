@@ -44,6 +44,9 @@ class Ui_MainWindow(QWidget):
 
         self.queryButton = Qt.QPushButton(self)
         self.queryButton.setText("查询")
+
+        self.flushButton = Qt.QPushButton(self)
+        self.flushButton.setText("后退")
         
         self.menuBar = Qt.QMenuBar(self)
 
@@ -90,6 +93,7 @@ class Ui_MainWindow(QWidget):
         layout.addWidget(self.createButton,8,6,1,1)
         layout.addWidget(self.modifyButton,8,8,1,1)
         layout.addWidget(self.deleteButton,8,7,1,1)
+        layout.addWidget(self.flushButton,8,10,1,1)
         layout.setMenuBar(self.menuBar)
 
 
