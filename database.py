@@ -51,6 +51,28 @@ def check_unique_id(student, path='stu.db'):
 		conn.close()
 		return False
 
+def check_unique_id_authority(user_name, path='manager.db'):
+	#检查新建项时，id不得重复
+	conn = sqlite3.connect(path)
+	c = conn.cursor()
+	c.execute("select * from POWER where user = '{}'".format(user_name))
+	if(len(c.fetchall()) == 0):
+		conn.close()
+		return True
+	else:
+		conn.close()
+		return False
+
+def insert_authority(uname, passwd, path='manager.db'):
+	conn = sqlite3.connect(path)
+	c = conn.cursor()
+	#新建的都是学生账户，权限为1
+	c.execute("insert into POWER (user, passwd, authority)\
+	values('{}', '{}', 1)".format(uname, passwd))
+	conn.commit()
+	conn.close()
+
+
 def delete(id, path='stu.db'):
 	#删除数据项，依据id
     conn = sqlite3.connect(path)

@@ -9,6 +9,7 @@ from Student import Students
 from boxUI import StudentBox, QueryStudent, EditClass
 from dialog import Ui_Dialog
 import about
+from newUser import Ui_register
 
 class set_slot_signal(Ui_MainWindow):
 	#信号与槽，对应登陆后的界面
@@ -34,6 +35,7 @@ class set_slot_signal(Ui_MainWindow):
         #get table item
         #self.stuInfoList.itemClicked.connect(self.getItem)
         self.findDisqualified.triggered.connect(self.findDisFunction)
+        self.createNewAccount.triggered.connect(self.newAccountFunction)
         
         #如果登录时候，得到的权限只是学生，则使增删改功能失效
         if globalVar.authority is 1:
@@ -42,6 +44,7 @@ class set_slot_signal(Ui_MainWindow):
             self.createButton.setEnabled(False)
             self.queryButton.setDefault(True)
             self.createNewAction.setEnabled(False)
+            self.createNewAccount.setEnabled(False)
 
     def modifyFunction(self):
         #TODO if there is no selected row , what will happen
@@ -263,9 +266,13 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setRowCount(i)
         globalVar.stuNum = i
 
+    def newAccountFunction(self):
+        dialog = Ui_register()
+        dialog.exec_()
+
 
 if __name__ == '__main__':
-	#这样 python slot_signal.py就可以直接运行，方便调试，把这段删了，就必须先登录
+    #这样 python slot_signal.py就可以直接运行，方便调试，把这段删了，就必须先登录
     app = QApplication(sys.argv)
     win = set_slot_signal()
     win.show()
