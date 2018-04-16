@@ -32,6 +32,14 @@ class Ui_MainWindow(QWidget):
         #将容器宽度平均分给所有条目
         self.stuInfoList.horizontalHeader().setSectionResizeMode(Qt.QHeaderView.Stretch)
 
+        header = self.stuInfoList.horizontalHeader()
+        header.setSortIndicator(5, QtCore.Qt.AscendingOrder)
+        header.setSortIndicatorShown(True)
+        header.setSectionsClickable(True)
+        #connect(headerGoods, SIGNAL(sectionClicked(int)), _nodeTableWidget, SLOT (sortByColumn(int)))
+        header.sectionClicked.connect(self.stuInfoList.sortByColumn)
+
+
         self.createButton = Qt.QPushButton(self)
         self.createButton.setText("新建")
         self.createButton.setDefault(True)
