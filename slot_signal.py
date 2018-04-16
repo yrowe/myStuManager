@@ -33,6 +33,7 @@ class set_slot_signal(Ui_MainWindow):
         self.flushButton.clicked.connect(self.flushFunction)
         #get table item
         #self.stuInfoList.itemClicked.connect(self.getItem)
+        self.findDisqualified.triggered.connect(self.findDisFunction)
         
         #如果登录时候，得到的权限只是学生，则使增删改功能失效
         if globalVar.verify is 1:
@@ -59,6 +60,7 @@ class set_slot_signal(Ui_MainWindow):
         collectStu.gender = self.stuInfoList.item(select_row, 2).text()
         collectStu.grade = self.stuInfoList.item(select_row, 3).text()
         collectStu.major = self.stuInfoList.item(select_row, 4).text()
+        collectStu.score = self.stuInfoList.item(select_row, 5).text()
         #设置是否修改的标志位
         globalVar.hasEdited = 0
         #打开修改窗口对话框
@@ -75,6 +77,7 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setItem(select_row, 2,QTableWidgetItem(globalVar.editStu.gender))
         self.stuInfoList.setItem(select_row, 3,QTableWidgetItem(globalVar.editStu.grade))
         self.stuInfoList.setItem(select_row, 4,QTableWidgetItem(globalVar.editStu.major))
+        self.stuInfoList.setItem(select_row, 5,QTableWidgetItem(globalVar.editStu.score))
         
         #修改数据库对应的项
         database.modify_item_by_id(globalVar.editStu)
@@ -101,6 +104,7 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setItem(globalVar.stuNum,2,QTableWidgetItem(student.gender))
         self.stuInfoList.setItem(globalVar.stuNum,3,QTableWidgetItem(student.grade))
         self.stuInfoList.setItem(globalVar.stuNum,4,QTableWidgetItem(student.major))
+        self.stuInfoList.setItem(globalVar.stuNum,5,QTableWidgetItem(student.score))
         #同步全局变量，+1，新增一个学生
         globalVar.stuNum = globalVar.stuNum + 1
     
@@ -127,6 +131,7 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 2, QTableWidgetItem(allStu[i][2]))
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
+            self.stuInfoList.setItem(i, 5, QTableWidgetItem(allStu[i][5]))
 
     def newDialog(self):
         #对接创建新档案用到的，新窗口
@@ -148,6 +153,7 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.removeRow(select_row)
         #同步更新到数据库
         database.delete(select_id)
+        globalVar.stuNum = globalVar.stuNum - 1
 
 
     def queryFunction(self):
@@ -164,7 +170,8 @@ class set_slot_signal(Ui_MainWindow):
         #点了查询，但是输入全部为空
         if globalVar.condition.id is '' and globalVar.condition.name is '' \
         and globalVar.condition.gender is '' and globalVar.condition.grade is ''\
-        and globalVar.condition.major is '' and globalVar.hasQuery is 1:
+        and globalVar.condition.major is '' and globalVar.condition.score is ''\
+        and globalVar.hasQuery is 1:
             self.warning(3)
             return
         #点了查询，但是无合适结果
@@ -190,6 +197,7 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 2, QTableWidgetItem(result[i][2]))
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(result[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(result[i][4]))
+            self.stuInfoList.setItem(i, 5, QTableWidgetItem(result[i][5]))
 
     def warning(self, typeError):
     	#不同的警告
@@ -229,6 +237,31 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 2, QTableWidgetItem(allStu[i][2]))
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
+            self.stuInfoList.setItem(i, 5, QTableWidgetItem(allStu[i][5]))
+
+    def findDisFunction(self):
+        allStu = database.get_all_item()
+        #globalVar.stuNum = len(allStu)
+        #self.stuInfoList.setRowCount(globalVar.stuNum)
+        #遍历的索引值
+        nowIndex = 0
+        #该循环I为当前显示的索引值，不同于之前的类似结构里的I
+        i = 0
+        for nowIndex in range(globalVar.stuNum):
+            if(int(allStu[nowIndex][5]) >= 60):
+                continue
+            
+            self.stuInfoList.setItem(i, 0, QTableWidgetItem(allStu[nowIndex][0]))
+            self.stuInfoList.setItem(i, 1, QTableWidgetItem(allStu[nowIndex][1]))
+            self.stuInfoList.setItem(i, 2, QTableWidgetItem(allStu[nowIndex][2]))
+            self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[nowIndex][3]))
+            self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[nowIndex][4]))
+            self.stuInfoList.setItem(i, 5, QTableWidgetItem(allStu[nowIndex][5]))
+            i = i + 1
+            
+        #删除多余网格
+        self.stuInfoList.setRowCount(i)
+        globalVar.stuNum = i
 
 
 if __name__ == '__main__':

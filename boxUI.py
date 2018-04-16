@@ -20,6 +20,7 @@ class StudentBox(object):
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
         self.major = window.lineEdit_major
+        self.score = window.lineEdit_score
         self.okButton = window.buttonBox.accepted
         self.cancelButton = window.buttonBox.rejected
 
@@ -37,6 +38,7 @@ class StudentBox(object):
         globalVar.newStu.gender = self.gender.text()
         globalVar.newStu.grade = self.grade.text()
         globalVar.newStu.major = self.major.text()
+        globalVar.newStu.score = self.score.text()
         if database.check_unique_id(globalVar.newStu):
             globalVar.status = 1
             self.dialog.accepted
@@ -63,6 +65,7 @@ class QueryStudent(object):
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
         self.major = window.lineEdit_major
+        self.score = window.lineEdit_score
         self.okButton = window.buttonBox.accepted
         self.cancelButton = window.buttonBox.rejected
         self.okButton.connect(self.getValue)
@@ -77,6 +80,7 @@ class QueryStudent(object):
         globalVar.condition.gender = self.gender.text()
         globalVar.condition.grade = self.grade.text()
         globalVar.condition.major = self.major.text()
+        globalVar.condition.score = self.score.text()
         self.dialog.accepted
         
 
@@ -94,6 +98,7 @@ class EditClass(object):
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
         self.major = window.lineEdit_major
+        self.score = window.lineEdit_score
         self.okButton = window.buttonBox.accepted
         self.cancelButton = window.buttonBox.rejected
         
@@ -103,6 +108,7 @@ class EditClass(object):
         self.gender.setText(stu.gender)
         self.grade.setText(stu.grade)
         self.major.setText(stu.major)
+        self.score.setText(stu.score)
 
         self.okButton.connect(self.getValue)
 
@@ -111,6 +117,6 @@ class EditClass(object):
 
     def getValue(self):
         globalVar.hasEdited = 1
-        globalVar.editStu = Students(self.id.text(),self.name.text(),self.gender.text(),self.grade.text(),self.major.text())
+        globalVar.editStu = Students(self.id.text(),self.name.text(),self.gender.text(),self.grade.text(),self.major.text(),self.score.text())
         self.dialog.accepted
 

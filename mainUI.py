@@ -21,8 +21,8 @@ class Ui_MainWindow(QWidget):
         self.stuInfoList = QTableWidget(self)
         self.stuInfoList.setEditTriggers(self.stuInfoList.NoEditTriggers)
         self.stuInfoList.verticalHeader().setHidden(True)
-        self.stuInfoList.setColumnCount(5)
-        self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业"])
+        self.stuInfoList.setColumnCount(6)
+        self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业", "成绩"])
         #选中条目的动作为选中那一行
         self.stuInfoList.setSelectionBehavior(Qt.QAbstractItemView.SelectRows)
         #单行选中
@@ -70,6 +70,10 @@ class Ui_MainWindow(QWidget):
         self.createNewAction.setText("新建档案")
         #self.enterAction.triggered.connect(self.enterActionTriggered)
         menu.addAction(self.createNewAction)
+
+        self.findDisqualified = Qt.QAction(menu)
+        self.findDisqualified.setText("查询不及格")
+        menu.addAction(self.findDisqualified)
 
         self.fileCloseAction = Qt.QAction(menu)
         self.fileCloseAction.setText("关闭")

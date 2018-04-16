@@ -37,6 +37,7 @@ class logWin(Ui_Dialog):
         globalVar.okPush = 1
         #print(self.comboBox.currentText())  #管理员/学生
         globalVar.authority = self.comboBox.currentIndex()   #0 for manager / 1 for student
+        print(type(globalVar.authority))
         if self.userLine.text() == 'wuziqiang' and self.passwd.text() == '123':
             globalVar.verify = 1
             self.dialog.close()
