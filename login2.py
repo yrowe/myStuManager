@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from welcome2 import Ui_Dialog
 from slot_signal import set_slot_signal
 import globalVar
+import database
 
 class logWin(Ui_Dialog):
 	#登录界面UI
@@ -37,12 +38,18 @@ class logWin(Ui_Dialog):
         globalVar.okPush = 1
         #print(self.comboBox.currentText())  #管理员/学生
         globalVar.authority = self.comboBox.currentIndex()   #0 for manager / 1 for student
-        print(type(globalVar.authority))
-        if self.userLine.text() == 'wuziqiang' and self.passwd.text() == '123':
-            globalVar.verify = 1
-            self.dialog.close()
-        elif self.userLine.text() == 'admin' and self.passwd.text() == '123':
-            globalVar.verify = 2
+
+        #print(type(globalVar.authority))
+        ans = database.check_authority(self.userLine.text())
+        if(len(ans) == 0):
+            #无对应用户名
+            globalVar.okPush = 0
+            self.warning()
+            return
+
+        ans = ans[0]  #列表转元组，因为ans不为空，则必为1
+        if self.passwd.text() == ans[1] and self.comboBox.currentIndex() == ans[2]:
+            globalVar.authority =  self.comboBox.currentIndex()
             self.dialog.close()
         else:
             globalVar.okPush = 0
@@ -56,7 +63,6 @@ class logWin(Ui_Dialog):
 
 
 if __name__ == '__main__':
-	#TODO 直接点右上角 会进入写下一段 咋绑定
     app = QApplication(sys.argv)
     winLog = logWin()
     winLog.show()

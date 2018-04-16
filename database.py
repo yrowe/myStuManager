@@ -108,3 +108,10 @@ def query(col, path='stu.db'):
 	ans = c.fetchall()
 	conn.close()
 	return ans
+
+def check_authority(user_name, path='manager.db'):
+    conn = sqlite3.connect(path)
+    c = conn.cursor()
+    c.execute("select * from POWER where user = '{}'".format(user_name))
+    ans = c.fetchall()
+    return ans

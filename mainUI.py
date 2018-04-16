@@ -71,6 +71,10 @@ class Ui_MainWindow(QWidget):
         #self.enterAction.triggered.connect(self.enterActionTriggered)
         menu.addAction(self.createNewAction)
 
+        self.createNewAccount = Qt.QAction(menu)
+        self.createNewAccount.setText("新建学生账户")
+        menu.addAction(self.createNewAccount)
+
         self.findDisqualified = Qt.QAction(menu)
         self.findDisqualified.setText("查询不及格")
         menu.addAction(self.findDisqualified)

@@ -36,7 +36,7 @@ class set_slot_signal(Ui_MainWindow):
         self.findDisqualified.triggered.connect(self.findDisFunction)
         
         #如果登录时候，得到的权限只是学生，则使增删改功能失效
-        if globalVar.verify is 1:
+        if globalVar.authority is 1:
             self.deleteButton.setEnabled(False)
             self.modifyButton.setEnabled(False)
             self.createButton.setEnabled(False)
