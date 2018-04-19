@@ -20,3 +20,5 @@ okPush = 0
 dbPath = None
 #权限 0管理 1学生
 authority = 0
+#升降序
+ascend = 0

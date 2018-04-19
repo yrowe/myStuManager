@@ -14,7 +14,7 @@ c.execute('''create table STU
        gender text,
        grade text,
        major text,
-       score text);''')
+       score int);''')
 print ("Table created successfully");
 conn.commit()
 conn.close()

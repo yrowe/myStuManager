@@ -37,8 +37,6 @@ class Ui_MainWindow(QWidget):
         header.setSortIndicatorShown(True)
         header.setSectionsClickable(True)
         #connect(headerGoods, SIGNAL(sectionClicked(int)), _nodeTableWidget, SLOT (sortByColumn(int)))
-        header.sectionClicked.connect(self.stuInfoList.sortByColumn)
-
 
         self.createButton = Qt.QPushButton(self)
         self.createButton.setText("新建")

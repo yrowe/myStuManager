@@ -38,7 +38,7 @@ class StudentBox(object):
         globalVar.newStu.gender = self.gender.text()
         globalVar.newStu.grade = self.grade.text()
         globalVar.newStu.major = self.major.text()
-        globalVar.newStu.score = self.score.text()
+        globalVar.newStu.score = int(self.score.text())
         if database.check_unique_id(globalVar.newStu):
             globalVar.status = 1
             self.dialog.accepted
@@ -80,7 +80,7 @@ class QueryStudent(object):
         globalVar.condition.gender = self.gender.text()
         globalVar.condition.grade = self.grade.text()
         globalVar.condition.major = self.major.text()
-        globalVar.condition.score = self.score.text()
+        globalVar.condition.score = int(self.score.text())
         self.dialog.accepted
         
 
@@ -117,6 +117,6 @@ class EditClass(object):
 
     def getValue(self):
         globalVar.hasEdited = 1
-        globalVar.editStu = Students(self.id.text(),self.name.text(),self.gender.text(),self.grade.text(),self.major.text(),self.score.text())
+        globalVar.editStu = Students(self.id.text(),self.name.text(),self.gender.text(),self.grade.text(),self.major.text(),int(self.score.text()))
         self.dialog.accepted
 
