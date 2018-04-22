@@ -131,7 +131,7 @@ class set_slot_signal(Ui_MainWindow):
     def openDBFunction(self):
         #对应，打开数据选项函数
         #打开数据库
-        self.getfiles()
+        #self.getfiles()
         #得到数据库中所有项
         allStu = database.get_all_item()
         #获得需要显示的项目个数，同步全局变量

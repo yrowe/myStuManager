@@ -1,5 +1,10 @@
-import sqlite3
+import pymysql
 import globalVar
+
+hostName = 'rm-m5erpn4lit10w44d9co.mysql.rds.aliyuncs.com'
+
+conn = pymysql.Connect(host='rm-m5erpn4lit10w44d9co.mysql.rds.aliyuncs.com',port=3306,user='root',passwd='Wrc12\
+   3456789',db='studentmanager',charset='utf8')
 
 def get_all_item(path='stu.db'):
 	#获取数据库所有数据
@@ -137,3 +142,4 @@ def check_authority(user_name, path='manager.db'):
     c.execute("select * from POWER where user = '{}'".format(user_name))
     ans = c.fetchall()
     return ans
+

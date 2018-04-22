@@ -22,3 +22,5 @@ dbPath = None
 authority = 0
 #升降序
 ascend = 0
+#本地数据库还是阿里云, 0 for local, 1 for aliyun
+web = 0
