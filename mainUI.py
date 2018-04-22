@@ -11,7 +11,7 @@ class Ui_MainWindow(QWidget):
 
     def initUI(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle("毕业设计")
+        #self.setWindowTitle("毕业设计")
         self.resize(900,600)
 
         rect = self.frameGeometry()

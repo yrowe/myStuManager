@@ -18,6 +18,8 @@ verify = 0
 okPush = 0
 #数据库位置，由打开数据库操作指定
 dbPath = None
+#用户名
+uname = None
 #权限 0管理 1学生
 authority = 0
 #升降序

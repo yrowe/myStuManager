@@ -15,6 +15,8 @@ class set_slot_signal(Ui_MainWindow):
 	#信号与槽，对应登陆后的界面
     def __init__(self):
         super().__init__()
+        authority_name = ['管理员','学生']
+        self.setWindowTitle("学生成绩管理系统-用户名:{}-权限:{}".format(globalVar.uname,authority_name[globalVar.authority]))
         #菜单，创建档案选项
         self.createNewAction.triggered.connect(self.createNewFunction)
         #菜单，打开数据库选项

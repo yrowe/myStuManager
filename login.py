@@ -50,6 +50,7 @@ class logWin(Ui_Dialog):
         ans = ans[0]  #列表转元组，因为ans不为空，则必为1
         if self.passwd.text() == ans[1] and self.comboBox.currentIndex() == ans[2]:
             globalVar.authority =  self.comboBox.currentIndex()
+            globalVar.uname = self.userLine.text()
             self.dialog.close()
         else:
             globalVar.okPush = 0
