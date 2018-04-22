@@ -68,7 +68,10 @@ class set_slot_signal(Ui_MainWindow):
         collectStu.gender = self.stuInfoList.item(select_row, 2).text()
         collectStu.grade = self.stuInfoList.item(select_row, 3).text()
         collectStu.major = self.stuInfoList.item(select_row, 4).text()
-        collectStu.score = self.stuInfoList.item(select_row, 5).text()
+        collectStu.score1 = self.stuInfoList.item(select_row, 5).text()
+        collectStu.score2 = self.stuInfoList.item(select_row, 6).text()
+        collectStu.score3 = self.stuInfoList.item(select_row, 7).text()
+        collectStu.score4 = self.stuInfoList.item(select_row, 8).text()
         #设置是否修改的标志位
         globalVar.hasEdited = 0
         #打开修改窗口对话框
@@ -85,7 +88,10 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setItem(select_row, 2,QTableWidgetItem(globalVar.editStu.gender))
         self.stuInfoList.setItem(select_row, 3,QTableWidgetItem(globalVar.editStu.grade))
         self.stuInfoList.setItem(select_row, 4,QTableWidgetItem(globalVar.editStu.major))
-        self.stuInfoList.setItem(select_row, 5,QTableWidgetItem(str(globalVar.editStu.score)))
+        self.stuInfoList.setItem(select_row, 5,QTableWidgetItem(str(globalVar.editStu.score1)))
+        self.stuInfoList.setItem(select_row, 6,QTableWidgetItem(str(globalVar.editStu.score2)))
+        self.stuInfoList.setItem(select_row, 7,QTableWidgetItem(str(globalVar.editStu.score3)))
+        self.stuInfoList.setItem(select_row, 8,QTableWidgetItem(str(globalVar.editStu.score4)))
         
         #修改数据库对应的项
         database.modify_item_by_id(globalVar.editStu)
@@ -112,7 +118,10 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setItem(globalVar.stuNum,2,QTableWidgetItem(student.gender))
         self.stuInfoList.setItem(globalVar.stuNum,3,QTableWidgetItem(student.grade))
         self.stuInfoList.setItem(globalVar.stuNum,4,QTableWidgetItem(student.major))
-        self.stuInfoList.setItem(globalVar.stuNum,5,QTableWidgetItem(str(student.score)))
+        self.stuInfoList.setItem(globalVar.stuNum,5,QTableWidgetItem(str(student.score1)))
+        self.stuInfoList.setItem(globalVar.stuNum,6,QTableWidgetItem(str(student.score2)))
+        self.stuInfoList.setItem(globalVar.stuNum,7,QTableWidgetItem(str(student.score3)))
+        self.stuInfoList.setItem(globalVar.stuNum,8,QTableWidgetItem(str(student.score4)))
         #同步全局变量，+1，新增一个学生
         globalVar.stuNum = globalVar.stuNum + 1
     
@@ -123,11 +132,21 @@ class set_slot_signal(Ui_MainWindow):
         #得到数据库地址，同步到全局变量
         globalVar.dbPath = fname
 
-    def HorSectionClicked(self):
+    def HorSectionClicked(self, index):
+        #print(index)
+        if(index < 5):
+            return
+        #print(globalVar.col_index, index)
+        if globalVar.col_index != index:
+            globalVar.col_index = index
+            globalVar.ascend = 0
+
+        header = self.stuInfoList.horizontalHeader()
+        header.setSortIndicator(index, QtCore.Qt.AscendingOrder)
         if globalVar.ascend == 0:
-            self.stuInfoList.sortByColumn(5, QtCore.Qt.AscendingOrder)
+            self.stuInfoList.sortByColumn(index, QtCore.Qt.AscendingOrder)
         else:
-            self.stuInfoList.sortByColumn(5, QtCore.Qt.DescendingOrder)
+            self.stuInfoList.sortByColumn(index, QtCore.Qt.DescendingOrder)
         globalVar.ascend = (globalVar.ascend+1)%2
 
     def openDBFunction(self):
@@ -147,6 +166,9 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
             self.stuInfoList.setItem(i, 5, QTableWidgetItem(str(allStu[i][5])))
+            self.stuInfoList.setItem(i, 6, QTableWidgetItem(str(allStu[i][6])))
+            self.stuInfoList.setItem(i, 7, QTableWidgetItem(str(allStu[i][7])))
+            self.stuInfoList.setItem(i, 8, QTableWidgetItem(str(allStu[i][8])))
 
     def newDialog(self):
         #对接创建新档案用到的，新窗口
@@ -213,6 +235,9 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(result[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(result[i][4]))
             self.stuInfoList.setItem(i, 5, QTableWidgetItem(str(result[i][5])))
+            self.stuInfoList.setItem(i, 6, QTableWidgetItem(str(result[i][6])))
+            self.stuInfoList.setItem(i, 7, QTableWidgetItem(str(result[i][7])))
+            self.stuInfoList.setItem(i, 8, QTableWidgetItem(str(result[i][8])))
 
     def warning(self, typeError):
     	#不同的警告
@@ -253,6 +278,9 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[i][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[i][4]))
             self.stuInfoList.setItem(i, 5, QTableWidgetItem(str(allStu[i][5])))
+            self.stuInfoList.setItem(i, 6, QTableWidgetItem(str(allStu[i][6])))
+            self.stuInfoList.setItem(i, 7, QTableWidgetItem(str(allStu[i][7])))
+            self.stuInfoList.setItem(i, 8, QTableWidgetItem(str(allStu[i][8])))
 
     def findDisFunction(self):
         allStu = database.get_all_item()
@@ -272,6 +300,9 @@ class set_slot_signal(Ui_MainWindow):
             self.stuInfoList.setItem(i, 3, QTableWidgetItem(allStu[nowIndex][3]))
             self.stuInfoList.setItem(i, 4, QTableWidgetItem(allStu[nowIndex][4]))
             self.stuInfoList.setItem(i, 5, QTableWidgetItem(str(allStu[nowIndex][5])))
+            self.stuInfoList.setItem(i, 6, QTableWidgetItem(str(allStu[nowIndex][6])))
+            self.stuInfoList.setItem(i, 7, QTableWidgetItem(str(allStu[nowIndex][7])))
+            self.stuInfoList.setItem(i, 8, QTableWidgetItem(str(allStu[nowIndex][8])))
             i = i + 1
             
         #删除多余网格

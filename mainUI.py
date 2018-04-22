@@ -12,7 +12,7 @@ class Ui_MainWindow(QWidget):
     def initUI(self):
         _translate = QtCore.QCoreApplication.translate
         #self.setWindowTitle("毕业设计")
-        self.resize(900,600)
+        self.resize(1200,600)
 
         rect = self.frameGeometry()
         rect.moveCenter(QApplication.desktop().availableGeometry().center())
@@ -21,8 +21,8 @@ class Ui_MainWindow(QWidget):
         self.stuInfoList = QTableWidget(self)
         self.stuInfoList.setEditTriggers(self.stuInfoList.NoEditTriggers)
         self.stuInfoList.verticalHeader().setHidden(True)
-        self.stuInfoList.setColumnCount(6)
-        self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业", "成绩"])
+        self.stuInfoList.setColumnCount(9)
+        self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业", "政治", "英语", "数学", "专业课"])
         #选中条目的动作为选中那一行
         self.stuInfoList.setSelectionBehavior(Qt.QAbstractItemView.SelectRows)
         #单行选中
@@ -33,7 +33,7 @@ class Ui_MainWindow(QWidget):
         self.stuInfoList.horizontalHeader().setSectionResizeMode(Qt.QHeaderView.Stretch)
 
         header = self.stuInfoList.horizontalHeader()
-        header.setSortIndicator(5, QtCore.Qt.AscendingOrder)
+        #header.setSortIndicator(5, QtCore.Qt.AscendingOrder)
         header.setSortIndicatorShown(True)
         header.setSectionsClickable(True)
         #connect(headerGoods, SIGNAL(sectionClicked(int)), _nodeTableWidget, SLOT (sortByColumn(int)))

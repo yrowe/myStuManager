@@ -1,4 +1,5 @@
 from dialog import Ui_Dialog
+from query_dialog import Ui_queryDialog
 from PyQt5 import QtWidgets, QtCore, QtGui
 from Student import Students
 import globalVar
@@ -20,7 +21,10 @@ class StudentBox(object):
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
         self.major = window.lineEdit_major
-        self.score = window.lineEdit_score
+        self.score1 = window.lineEdit_score1
+        self.score2 = window.lineEdit_score2
+        self.score3 = window.lineEdit_score3
+        self.score4 = window.lineEdit_score4
         self.okButton = window.buttonBox.accepted
         self.cancelButton = window.buttonBox.rejected
 
@@ -38,7 +42,10 @@ class StudentBox(object):
         globalVar.newStu.gender = self.gender.text()
         globalVar.newStu.grade = self.grade.text()
         globalVar.newStu.major = self.major.text()
-        globalVar.newStu.score = int(self.score.text())
+        globalVar.newStu.score1 = int(self.score1.text())
+        globalVar.newStu.score2 = int(self.score2.text())
+        globalVar.newStu.score3 = int(self.score3.text())
+        globalVar.newStu.score4 = int(self.score4.text())
         if database.check_unique_id(globalVar.newStu):
             globalVar.status = 1
             self.dialog.accepted
@@ -55,7 +62,7 @@ class QueryStudent(object):
 	#查询按钮弹出来的对话框
     def __init__(self):
         self.dialog = QtWidgets.QDialog()
-        window = Ui_Dialog()
+        window = Ui_queryDialog()
         window.setupUi(self.dialog)
         self.dialog.setWindowTitle("学生查询")
         self.dialog.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -65,7 +72,6 @@ class QueryStudent(object):
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
         self.major = window.lineEdit_major
-        self.score = window.lineEdit_score
         self.okButton = window.buttonBox.accepted
         self.cancelButton = window.buttonBox.rejected
         self.okButton.connect(self.getValue)
@@ -80,7 +86,6 @@ class QueryStudent(object):
         globalVar.condition.gender = self.gender.text()
         globalVar.condition.grade = self.grade.text()
         globalVar.condition.major = self.major.text()
-        globalVar.condition.score = int(self.score.text())
         self.dialog.accepted
         
 
@@ -98,7 +103,10 @@ class EditClass(object):
         self.gender = window.lineEdit_gender
         self.grade = window.lineEdit_grade
         self.major = window.lineEdit_major
-        self.score = window.lineEdit_score
+        self.score1 = window.lineEdit_score1
+        self.score2 = window.lineEdit_score2
+        self.score3 = window.lineEdit_score3
+        self.score4 = window.lineEdit_score4
         self.okButton = window.buttonBox.accepted
         self.cancelButton = window.buttonBox.rejected
         
@@ -108,7 +116,10 @@ class EditClass(object):
         self.gender.setText(stu.gender)
         self.grade.setText(stu.grade)
         self.major.setText(stu.major)
-        self.score.setText(stu.score)
+        self.score1.setText(stu.score1)
+        self.score2.setText(stu.score2)
+        self.score3.setText(stu.score3)
+        self.score4.setText(stu.score4)
 
         self.okButton.connect(self.getValue)
 
@@ -117,6 +128,6 @@ class EditClass(object):
 
     def getValue(self):
         globalVar.hasEdited = 1
-        globalVar.editStu = Students(self.id.text(),self.name.text(),self.gender.text(),self.grade.text(),self.major.text(),int(self.score.text()))
+        globalVar.editStu = Students(self.id.text(),self.name.text(),self.gender.text(),self.grade.text(),self.major.text(),int(self.score1.text()),int(self.score2.text()),int(self.score3.text()),int(self.score4.text()))
         self.dialog.accepted
 

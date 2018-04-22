@@ -20,8 +20,8 @@ def add_new_item(student, path='stu.db'):
     	return False
     conn = sqlite3.connect(path)
     c = conn.cursor()
-    c.execute("insert into STU (id, name, gender, grade, major, score)\
-     values('{}', '{}', '{}', '{}', '{}', {})".format(student.id, student.name, student.gender, student.grade, student.major, student.score)) 
+    c.execute("insert into STU (id, name, gender, grade, major, score1, score2, score3, score4)\
+     values('{}', '{}', '{}', '{}', '{}', {}, {}, {}, {})".format(student.id, student.name, student.gender, student.grade, student.major, student.score1, student.score2, student.score3, student.score4)) 
     conn.commit()
     conn.close()
     return True
@@ -33,7 +33,8 @@ def modify_item_by_id(student, path='stu.db'):
     c = conn.cursor()
 
     c.execute("update STU set name = '{}', gender = '{}', grade = '{}', \
-    	major = '{}', score = {} where id = '{}'".format(student.name, student.gender, student.grade, student.major, student.score, student.id))
+    	major = '{}', score1 = {} , score2 = {}, score3 = {}, score4 = {}\
+    	where id = '{}'".format(student.name, student.gender, student.grade, student.major, student.score1, student.score2, student.score3, student.score4, student.id))
     conn.commit()
     conn.close()
 
@@ -112,7 +113,7 @@ def query(col, path='stu.db'):
 		cnt = cnt + 1
 	elif col.major is not '':
 		order += " and major = '{}'".format(col.major)
-
+	'''
 	if col.score is not '' and cnt is 0:
 		order += "score = {}".format(col.score)
 		cnt = cnt + 1
@@ -120,6 +121,7 @@ def query(col, path='stu.db'):
 		order += " and score = {}".format(col.score)
 
 	#print(order)
+	'''
 	if order == '':
 		#len ans = 0
 		return ()
