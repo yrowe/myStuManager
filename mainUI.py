@@ -21,8 +21,8 @@ class Ui_MainWindow(QWidget):
         self.stuInfoList = QTableWidget(self)
         self.stuInfoList.setEditTriggers(self.stuInfoList.NoEditTriggers)
         self.stuInfoList.verticalHeader().setHidden(True)
-        self.stuInfoList.setColumnCount(9)
-        self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业", "政治", "英语", "数学", "专业课"])
+        self.stuInfoList.setColumnCount(10)
+        self.stuInfoList.setHorizontalHeaderLabels(["学号", "姓名", "性别", "年级", "专业", "政治", "英语", "数学", "专业课","总分"])
         #选中条目的动作为选中那一行
         self.stuInfoList.setSelectionBehavior(Qt.QAbstractItemView.SelectRows)
         #单行选中
