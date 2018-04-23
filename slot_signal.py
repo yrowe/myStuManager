@@ -10,6 +10,7 @@ from boxUI import StudentBox, QueryStudent, EditClass
 from dialog import Ui_Dialog
 import about
 from newUser import Ui_register
+from choose_dialog import Ui_choose
 
 class set_slot_signal(Ui_MainWindow):
 	#信号与槽，对应登陆后的界面
@@ -294,6 +295,9 @@ class set_slot_signal(Ui_MainWindow):
 
     def findDisFunction(self):
     	#查询不及格学生
+        diglog = Ui_choose()
+        diglog.exec_()
+
         allStu = database.get_all_item()
         #globalVar.stuNum = len(allStu)
         #self.stuInfoList.setRowCount(globalVar.stuNum)
@@ -301,8 +305,14 @@ class set_slot_signal(Ui_MainWindow):
         nowIndex = 0
         #该循环I为当前显示的索引值，不同于之前的类似结构里的I
         i = 0
+        #不同科目，为60和90
+        if globalVar.disqualified == 5 or globalVar.disqualified == 6:
+            thresh = 60
+        else:
+            thresh = 90
+
         for nowIndex in range(globalVar.stuNum):
-            if(int(allStu[nowIndex][5]) >= 60):
+            if(int(allStu[nowIndex][globalVar.disqualified]) >= thresh):
                 continue
             
             self.stuInfoList.setItem(i, 0, QTableWidgetItem(allStu[nowIndex][0]))
