@@ -9,7 +9,7 @@ conn = sqlite3.connect('stu.db')
 print ("Opened database successfully");
 c = conn.cursor()
 c.execute('''create table STU
-       (id text primary key,
+       (id varchar(10) primary key,
        name text,
        gender text,
        grade text,
