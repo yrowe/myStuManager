@@ -94,7 +94,7 @@ class set_slot_signal(Ui_MainWindow):
         self.stuInfoList.setItem(select_row, 7,QTableWidgetItem(str(globalVar.editStu.score3)))
         self.stuInfoList.setItem(select_row, 8,QTableWidgetItem(str(globalVar.editStu.score4)))
         total_score = globalVar.editStu.score1+globalVar.editStu.score2+globalVar.editStu.score3+globalVar.editStu.score4
-        self.stuInfoList.setItem(select_row, 9,QTableWidgetItem(str(globalVar.editStu.score5)))
+        self.stuInfoList.setItem(select_row, 9,QTableWidgetItem(str(total_score)))
         
         #修改数据库对应的项
         database.modify_item_by_id(globalVar.editStu)
