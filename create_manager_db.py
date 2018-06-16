@@ -9,7 +9,7 @@ conn = sqlite3.connect('manager.db')
 print ("Opened database successfully")
 c = conn.cursor()
 c.execute('''create table POWER
-       (user text primary key,
+       (user varchar(10) primary key,
        passwd text,
        authority int);''')
 print ("Table created successfully")

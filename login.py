@@ -4,7 +4,10 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from welcome2 import Ui_Dialog
 from slot_signal import set_slot_signal
 import globalVar
-import database
+if globalVar.web == 1:
+    import database_web as database
+else:
+    import database
 
 class logWin(Ui_Dialog):
 	#登录界面UI

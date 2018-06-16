@@ -1,6 +1,10 @@
 from reg_dialog import Ui_Dialog
 from PyQt5 import QtWidgets, QtCore, QtGui
-import database
+import globalVar
+if globalVar.web == 1:
+    import database_web as database
+else:
+    import database
 
 
 class Ui_register(object):

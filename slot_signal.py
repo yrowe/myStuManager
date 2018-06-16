@@ -4,13 +4,16 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTableWidget, QH
 from PyQt5 import QtWidgets, QtCore, QtGui
 import globalVar
 import sqlite3
-import database
 from Student import Students
 from boxUI import StudentBox, QueryStudent, EditClass
 from dialog import Ui_Dialog
 import about
 from newUser import Ui_register
 from choose_dialog import Ui_choose
+if globalVar.web == 1:
+	import database_web as database
+else:
+	import database
 
 class set_slot_signal(Ui_MainWindow):
 	#信号与槽，对应登陆后的界面

@@ -1,15 +1,18 @@
 import pymysql
 import globalVar
 
-hostName = 'rm-m5erpn4lit10w44d9co.mysql.rds.aliyuncs.com'
+hostName = 'rm-m5ee8zze9juuq3r31to.mysql.rds.aliyuncs.com'
 
-conn = pymysql.Connect(host='rm-m5erpn4lit10w44d9co.mysql.rds.aliyuncs.com',port=3306,user='root',passwd='Wrc12\
-   3456789',db='studentmanager',charset='utf8')
+def connect():
+    conn = pymysql.Connect(host=hostName,port=3306,user='root',passwd='Wrc123456789',db='studentmanager',charset='utf8')
+    print('sucessfully connected to aliyun')
+    return conn
 
 def get_all_item(path='stu.db'):
 	#获取数据库所有数据
     #path = globalVar.dbPath
-    conn = sqlite3.connect(path)
+    #conn = sqlite3.connect(path)
+    conn = connect()
     c = conn.cursor()
     c.execute("select * from STU")
     allStu = c.fetchall()
@@ -23,10 +26,11 @@ def add_new_item(student, path='stu.db'):
     #path = globalVar.dbPath
     if not check_unique_id(student):
     	return False
-    conn = sqlite3.connect(path)
+    #conn = sqlite3.connect(path)
+    conn = connect()
     c = conn.cursor()
-    c.execute("insert into STU (id, name, gender, grade, major, score)\
-     values('{}', '{}', '{}', '{}', '{}', {})".format(student.id, student.name, student.gender, student.grade, student.major, student.score)) 
+    c.execute("insert into STU (id, name, gender, grade, major, score1, score2, score3, score4)\
+     values('{}', '{}', '{}', '{}', '{}', {}, {}, {}, {})".format(student.id, student.name, student.gender, student.grade, student.major, student.score1, student.score2, student.score3, student.score4)) 
     conn.commit()
     conn.close()
     return True
@@ -34,11 +38,13 @@ def add_new_item(student, path='stu.db'):
 def modify_item_by_id(student, path='stu.db'):
 	#根据id, 修改数据库对应的项
     #path = globalVar.dbPath
-    conn = sqlite3.connect(path)
+    #conn = sqlite3.connect(path)
+    conn = connect()
     c = conn.cursor()
 
     c.execute("update STU set name = '{}', gender = '{}', grade = '{}', \
-    	major = '{}', score = {} where id = '{}'".format(student.name, student.gender, student.grade, student.major, student.score, student.id))
+    	major = '{}', score1 = {} , score2 = {}, score3 = {}, score4 = {}\
+    	where id = '{}'".format(student.name, student.gender, student.grade, student.major, student.score1, student.score2, student.score3, student.score4, student.id))
     conn.commit()
     conn.close()
 
@@ -46,7 +52,8 @@ def modify_item_by_id(student, path='stu.db'):
 def check_unique_id(student, path='stu.db'):
 	#检查新建项时，id不得重复
 	#path = globalVar.dbPath
-	conn = sqlite3.connect(path)
+	#conn = sqlite3.connect(path)
+	conn = connect()
 	c = conn.cursor()
 	c.execute("select * from STU where id = {}".format(student.id))
 	if(len(c.fetchall()) == 0):
@@ -58,7 +65,8 @@ def check_unique_id(student, path='stu.db'):
 
 def check_unique_id_authority(user_name, path='manager.db'):
 	#检查新建项时，id不得重复
-	conn = sqlite3.connect(path)
+	#conn = sqlite3.connect(path)
+	conn = connect()
 	c = conn.cursor()
 	c.execute("select * from POWER where user = '{}'".format(user_name))
 	if(len(c.fetchall()) == 0):
@@ -69,7 +77,8 @@ def check_unique_id_authority(user_name, path='manager.db'):
 		return False
 
 def insert_authority(uname, passwd, path='manager.db'):
-	conn = sqlite3.connect(path)
+	#conn = sqlite3.connect(path)
+	conn = connect()
 	c = conn.cursor()
 	#新建的都是学生账户，权限为1
 	c.execute("insert into POWER (user, passwd, authority)\
@@ -80,7 +89,8 @@ def insert_authority(uname, passwd, path='manager.db'):
 
 def delete(id, path='stu.db'):
 	#删除数据项，依据id
-    conn = sqlite3.connect(path)
+    #conn = sqlite3.connect(path)
+    conn = connect()
     c = conn.cursor()
     c.execute("delete from STU where id = {}".format(id))
     conn.commit()
@@ -117,7 +127,7 @@ def query(col, path='stu.db'):
 		cnt = cnt + 1
 	elif col.major is not '':
 		order += " and major = '{}'".format(col.major)
-
+	'''
 	if col.score is not '' and cnt is 0:
 		order += "score = {}".format(col.score)
 		cnt = cnt + 1
@@ -125,11 +135,13 @@ def query(col, path='stu.db'):
 		order += " and score = {}".format(col.score)
 
 	#print(order)
+	'''
 	if order == '':
 		#len ans = 0
 		return ()
 
-	conn = sqlite3.connect(path)
+	#conn = sqlite3.connect(path)
+	conn = connect()
 	c = conn.cursor()
 	c.execute("select * from STU where "+order)
 	ans = c.fetchall()
@@ -137,7 +149,8 @@ def query(col, path='stu.db'):
 	return ans
 
 def check_authority(user_name, path='manager.db'):
-    conn = sqlite3.connect(path)
+    #conn = sqlite3.connect(path)
+    conn = connect()
     c = conn.cursor()
     c.execute("select * from POWER where user = '{}'".format(user_name))
     ans = c.fetchall()

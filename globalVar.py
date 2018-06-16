@@ -27,6 +27,6 @@ ascend = 0
 #和上次升降序 是否一致
 col_index = 0
 #本地数据库还是阿里云, 0 for local, 1 for aliyun
-web = 0
+web = 1
 #需查询的不及格科目
 disqualified = 0

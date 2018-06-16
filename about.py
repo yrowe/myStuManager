@@ -15,7 +15,7 @@ class Ui_Dialog(object):
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(40, 10, 241, 251))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("dq.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("cover.jpg"))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Dialog)
@@ -39,6 +39,6 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label_2.setText(_translate("Dialog", "吴自强作品"))
-        self.label_3.setText(_translate("Dialog", "2143410"))
+        self.label_2.setText(_translate("Dialog", "吴若晨作品"))
+        self.label_3.setText(_translate("Dialog", "149034028"))
 
